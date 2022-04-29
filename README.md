@@ -7,6 +7,8 @@ The node library I found to handle resilience at the functional level is some 3,
 
 I think it's time for a better library, so here is my whopping 37 lines of code. :)
 
+## Overview
+
 **Circuit Breaker**
 
 The circuit breaker will trip for *breakerTimeout* ms after *failThreshold* consecutive failures. During the timeout period, all calls will be redirected to the fallback function. After the timeout period, *successThreshold* consecutive successful calls are required to reset the failure count to zero and prevent a single failure from retriggering the circuit breaker.
