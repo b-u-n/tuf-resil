@@ -1,0 +1,30 @@
+{
+  "name": "tuf-resil",
+  "version": "1.0.0",
+  "description": "Functional ES6 Resiliency: Circuit Breaker, Fallback, Retry, Backoff, Rate Limiting",
+  "main": "tuf-resil.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/b-u-n/tuf-resil.git"
+  },
+  "keywords": [
+    "Resiliency",
+    "Resilience",
+    "Circuit",
+    "Breaker",
+    "Fallback",
+    "Retry",
+    "Backoff",
+    "Rate",
+    "Limit"
+  ],
+  "author": "b-u-n",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/b-u-n/tuf-resil/issues"
+  },
+  "homepage": "https://github.com/b-u-n/tuf-resil#readme"
+}
