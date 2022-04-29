@@ -50,7 +50,7 @@ const axiosLocalhostTUFInstance = TUF({
 });
 ```
 
-### Options (most required):
+### Options
 
   - **retries** Number of retry attempts.
   - **backoff** A backoff value in ms, to be passed to the backoff function.
