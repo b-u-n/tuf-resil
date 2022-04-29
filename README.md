@@ -3,7 +3,7 @@ Functional ES6 Resiliency: Circuit Breaker, Fallback, Retry, Backoff, Rate Limit
 
 ## Introduction
 
-The node library I found to handle resilience at the functional level is some 3,000 lines of code with an arcane interface: [Cockatiel](https://npm.io/package/cockatiel). There are cleaner libraries, but they only wrap HTTP requests, not functions.
+The node library I found to handle resiliency at the functional level is some 3,000 lines of code with an arcane interface: [Cockatiel](https://npm.io/package/cockatiel). There are cleaner libraries, but they only wrap HTTP requests, not functions.
 
 I think it's time for a better library, so here is my whopping 37 lines of code. :)
 
