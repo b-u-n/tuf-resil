@@ -103,6 +103,8 @@ If a fallback is not provided, the returned value will be "null". One might cons
 
 And there you are, you're resilient!
 
+## tl;dr
+
 ```
 const axiosLocalhostTUFInstance = TUF({
     retries: 3,
@@ -114,7 +116,7 @@ const axiosLocalhostTUFInstance = TUF({
     breakerTimeout: 10000
 });
 
-//separate TUF instance for the fallback, to handle retries, backoff, rate limiting.
+//separate TUF instance for the fallback
 const axiosLocalhostFallbackTUF = TUF({
     retries: 3,
     backoff: 1000,
