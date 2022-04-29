@@ -5,7 +5,7 @@ const to = (p) => p.then(data => [null, data]).catch(err => [err, null]);
 export default (props) => {
     let [breakerState, successes, failures, nextAttempt, lastCall] = [2,0,0,Date.now(),0];
     const backoffFunction = props.backoffFunction ? props.backoffFunction : (delay,initial,attempt) => delay+initial;
-    return (asyncFunction, asyncFallback, asyncErrorHandler) => async (...params) => {
+    return (asyncErrorHandler, asyncFallback, asyncFunction) => async (...params) => {
         let [tries, delay] = [props.retries, 0];
         while(tries-->=0){
             if(breakerState===0) {
