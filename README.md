@@ -27,7 +27,7 @@ Optional rate limiting within a TUF instance.
 
 **Timeout**
 
-Timeouts should be handled with individual libraries and requests. For instance, fetch requests should be wrapped with a setTimeout that aborts the request. Implementing timeouts at the TUF level would return a failure to the user after timeout, but allow the request to linger in the background.
+Timeouts should be handled by individual libraries and requests. For instance, fetch requests should be wrapped with a setTimeout that aborts the request. Implementing timeouts at the TUF level would return a failure to the user after timeout, but allow the request to linger in the background.
 
 *Request bulkhead if required*
 
