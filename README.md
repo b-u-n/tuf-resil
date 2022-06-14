@@ -8,10 +8,10 @@ Simple, full-featured functional resiliency in 37 lines of code. :)
 ## tl;dr
 
 ```
-import TUF from './tuf-resil.js';
+import TUF from 'tuf-resil';
 
 const axiosGetLocalhost = TUF()(async (err) => console.log(err),
-					null || async(url) => {data: 'data from fallback source'},
+					null || (async(url) => {data: 'data from fallback source'}),
 					axios.get);
 
 const res = await axiosGetLocalhost('http://localhost:3000/');
@@ -87,7 +87,7 @@ The error handler will receive the following object to assist in analyzing failu
 ### Example
 
 ```
-import TUF from './tuf-resil.js';
+import TUF from 'tuf-resil';
 
 const axiosLocalhostTUFInstance = TUF({
     retries: 3,
