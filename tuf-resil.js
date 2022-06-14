@@ -8,7 +8,7 @@ export default (props) => {
     return (asyncErrorHandler, asyncFallback, asyncFunction) => async (...params) => {
         let [tries, delay] = [props.retries, 0];
         while(tries-->-1){
-            if(Date.now() > nextAttempt) breakerState=1;
+            if(breakerState===0 && Date.now() > nextAttempt) breakerState=1;
             if(breakerState===0) {
                 if(asyncErrorHandler) await asyncErrorHandler({error: new Error('Breaker Closed'), breakerState, failures, successes, tries: props.retries-tries, props});
                 if(props.retryBreaker) await slep(delay = props.backoffFunction(delay,props.backoff,(props.retries-tries)));
