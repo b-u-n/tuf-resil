@@ -12,7 +12,7 @@ export default (props) => {
                 if(Date.now() > nextAttempt) breakerState=1;
                 else {
                     if(asyncErrorHandler) await asyncErrorHandler({error: new Error('Breaker Closed'), breakerState, failures, successes, tries: props.retries-tries, props});
-                    if(props.retryBreaker) await await slep(delay = props.backoffFunction(delay,props.backoff,(props.retries-tries)));
+                    if(props.retryBreaker) await slep(delay = props.backoffFunction(delay,props.backoff,(props.retries-tries)));
                     else return asyncFallback ? await asyncFallback(...params) : null;
                 }
             }else{
