@@ -4,7 +4,7 @@
   "description": "Functional ES6 Resiliency: Circuit Breaker, Fallback, Retry, Backoff, Rate Limiting",
   "main": "tuf-resil.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha ./test/*"
   },
   "repository": {
     "type": "git",
@@ -26,5 +26,11 @@
   "bugs": {
     "url": "https://github.com/b-u-n/tuf-resil/issues"
   },
-  "homepage": "https://github.com/b-u-n/tuf-resil#readme"
+  "homepage": "https://github.com/b-u-n/tuf-resil#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0"
+  },
+  "type": "module"
 }

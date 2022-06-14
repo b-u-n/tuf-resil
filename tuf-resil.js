@@ -3,8 +3,8 @@ const slep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 const to = (p) => p.then(data => [null, data]).catch(err => [err, null]);
 
 export default (props) => {
+    props = {retries: 3, backoff: 1000, rate: 0, failThreshold: 10, successThreshold: 3, breakerTimeout: 10000, backoffFunction : (delay,initial,attempt) => delay+initial, ...props}
     let [breakerState, successes, failures, nextAttempt, lastCall] = [2,0,0,Date.now(),0];
-    const backoffFunction = props.backoffFunction ? props.backoffFunction : (delay,initial,attempt) => delay+initial;
     return (asyncErrorHandler, asyncFallback, asyncFunction) => async (...params) => {
         let [tries, delay] = [props.retries, 0];
         while(tries-->=0){
@@ -12,26 +12,26 @@ export default (props) => {
                 if(Date.now() > nextAttempt) breakerState=1;
                 else break;
             }
-            const rate = lastCall ? Date.now() - lastCall : props.rate;
-            lastCall = Date.now() + (rate < props.rate ? props.rate - rate : 0);
-            if(rate < props.rate ) await slep(props.rate - rate);
+			if(props.rate>0){
+				const rate = lastCall ? Date.now() - lastCall : props.rate;
+				lastCall = Date.now() + (rate < props.rate ? props.rate - rate : 0);
+				if(rate < props.rate ) await slep(props.rate - rate);
+			}
             let [err, res] = await to(asyncFunction(...params));
             if(res || err===null) {
-                if(breakerState===1 && successes++ >= props.successThreshold){
-                    successes=0;
+                if(breakerState===1 && ++successes >= props.successThreshold){
+                    successes=failures=0;
                     breakerState=2;
                 }
-                failures=0;
                 return res;
             }
-            failures++;
-            if(failures >= props.failThreshold) {
+            if(++failures >= props.failThreshold) {
                 successes=breakerState=0;
                 nextAttempt = Date.now() + props.breakerTimeout;
             }
             if(asyncErrorHandler) await asyncErrorHandler({error: err, breakerState, failures, successes, tries, props});
-            await slep(delay = backoffFunction(delay,props.backoff,(props.retries-tries)));
+            if(props.backoffFunction) await slep(delay = props.backoffFunction(delay,props.backoff,(props.retries-tries)));
         }
-        return asyncFallback? await asyncFallback(...params) : null;
+        return asyncFallback ? await asyncFallback(...params) : null;
     }
-}
+};
