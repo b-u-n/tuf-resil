@@ -4,7 +4,7 @@ Functional ES6 Resiliency: Circuit Breaker, Fallback, Retry, Backoff, Rate Limit
 
 ## Introduction
 
-Simple, full-featured functional resiliency in 37 lines of code. :)
+Simple, full-featured ES6 module for functional resiliency in 37 lines of code. :)
 
 
 ## tl;dr
