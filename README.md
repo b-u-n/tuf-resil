@@ -1,9 +1,11 @@
 # TUF-resil
 Functional ES6 Resiliency: Circuit Breaker, Fallback, Retry, Backoff, Rate Limiting
 
+
 ## Introduction
 
 Simple, full-featured functional resiliency in 37 lines of code. :)
+
 
 ## tl;dr
 
@@ -18,36 +20,9 @@ const res = await axiosGetLocalhost('http://localhost:3000/');
 if(res) console.log(res);
 ```
 
-## Overview
-
-
-**Fallback**
-
-A fallback function should be provided, to be used in the event that the circuit breaker trips or a successful execution does not occur before retries for a function execution run out. The fallback function should take the same arguments as the primary function.
-
-**Retry with Backoff**
-
-Automatic retry with a backoff function.
-
-**Rate Limiting**
-
-Optional rate limiting within a TUF instance.
-
-**Circuit Breaker**
-
-The circuit breaker will trip for **breakerTimeout** ms after **failThreshold** consecutive failures. During the timeout period, all calls will be redirected to the fallback function. After the timeout period, **successThreshold** consecutive successful calls are required to reset the failure count to zero and prevent a single failure from retriggering the circuit breaker.
-
-**Timeout**
-
-To do.
-
-*Request bulkhead if required*
-
-
 ## Usage
 
-
-`import TUF from './tuf-resil.js';`
+`import TUF from 'tuf-resil';`
 
 First, define a TUF instance that we'll use to wrap a resource (for example, an axios connection to localhost).
 
@@ -83,12 +58,15 @@ The error handler will receive the following object to assist in analyzing failu
 
 `{error, breakerState, failures, successes, tries, props}`
 
+It would be wise to have a single error handler for all functions. :)
+
 
 ### Example
 
 ```
 import TUF from 'tuf-resil';
 
+//Setup any options
 const axiosLocalhostTUFInstance = TUF({
     retries: 3,
     backoff: 1000,
@@ -99,16 +77,49 @@ const axiosLocalhostTUFInstance = TUF({
     breakerTimeout: 10000
 });
 
+//Wrap your error handler, fallback, and function.
 const getAxiosLocalhostTUF = axiosLocalhostTUFInstance(async (err) => console.error(err?.error),
     async (url) => {data: 'data from another source or cache'},
     axios.get);
-	
+
+
+//Okay, call your function!
 const res = await getAxiosLocalhostTUF('http://localhost:3000/');
+
 if(res) console.log(res);
 ```
 
-Call your function as if it were the one you wrapped. It will be retried, rate limited, switch to fallback, and activate the circuit breaker as necessary. Any errors along the way will be passed to the error handling function, which is absolutely required. :)
+Your function will be retried, rate limited, switch to fallback, and activate the circuit breaker as necessary. Any errors along the way will be passed to the error handling function, which is absolutely required. :)
 
-If a fallback is not provided, the returned value will be **null** on main function failure. One might consider wrapping the fallback in a separate TUF. ^-^
+If a fallback is not provided, the returned value will be **null** on main function failure.
 
 And there you are, you're resilient!
+
+
+## Capabilities
+
+**Fallback**
+
+Optionally provide a fallback function to use if the circuit breaker trips or a successful execution does not occur before retries run out. The fallback function should take the same arugments as the primary function.
+
+**Retry with Backoff**
+
+Automatic retry with a backoff function.
+
+**Rate Limiting**
+
+Optional rate limiting within a TUF instance.
+
+**Circuit Breaker**
+
+The circuit breaker will trip for **breakerTimeout** ms after **failThreshold** consecutive failures. During the timeout period, all calls will be redirected to the fallback function. After the timeout period, **successThreshold** consecutive successful calls are required to reset the failure count to zero and prevent a single failure from retriggering the circuit breaker.
+
+**Timeout**
+
+To do.
+
+*Request bulkhead if required*
+
+
+## License
+MIT
