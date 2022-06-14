@@ -3,7 +3,7 @@ const slep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 const to = (p) => p.then(data => [null, data]).catch(err => [err, null]);
 
 export default (props) => {
-    props = {retries: 6, backoff: 1000, rate: 0, failThreshold: 2, successThreshold: 3, breakerTimeout: 10000, backoffFunction : (delay,initial,attempt) => delay+initial, retryBreaker: false, ...props}
+    props = {retries: 3, backoff: 1000, rate: 0, failThreshold: 10, successThreshold: 3, breakerTimeout: 10000, backoffFunction : (delay,initial,attempt) => delay+initial, retryBreaker: false, ...props}
     let [breakerState, successes, failures, nextAttempt, lastCall] = [2,0,0,Date.now(),0];
     return (asyncErrorHandler, asyncFallback, asyncFunction) => async (...params) => {
         let [tries, delay] = [props.retries, 0];
