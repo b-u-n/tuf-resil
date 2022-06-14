@@ -5,6 +5,19 @@ Functional ES6 Resiliency: Circuit Breaker, Fallback, Retry, Backoff, Rate Limit
 
 Simple, full-featured functional resiliency in 37 lines of code. :)
 
+## tl;dr
+
+```
+import TUF from './tuf-resil.js';
+
+const axiosGetLocalhost = TUF()(async (err) => console.log(err),
+					null || async(url) => {data: 'data from fallback source'},
+					axios.get);
+
+const res = await axiosGetLocalhost('http://localhost:3000/');
+if(res) console.log(res);
+```
+
 ## Overview
 
 
@@ -30,18 +43,6 @@ To do.
 
 *Request bulkhead if required*
 
-## tl;dr
-
-```
-import TUF from './tuf-resil.js';
-
-const axiosGetLocalhost = TUF()(async (err) => console.log(err),
-					null || async(url) => {data: 'data from fallback source'},
-					axios.get);
-
-const res = await axiosGetLocalhost('http://localhost:3000/');
-if(res) console.log(res);
-```
 
 ## Usage
 
