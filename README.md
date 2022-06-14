@@ -13,8 +13,8 @@ Simple, full-featured functional resiliency in 37 lines of code. :)
 import TUF from 'tuf-resil';
 
 const axiosGetLocalhost = TUF()(async (err) => console.log(err),
-					null || (async(url) => {data: 'data from fallback source'}),
-					axios.get);
+    null || (async(url) => {data: 'data from fallback source'}),
+    axios.get);
 
 const res = await axiosGetLocalhost('http://localhost:3000/');
 if(res) console.log(res);
