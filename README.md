@@ -34,7 +34,8 @@ const axiosLocalhostTUFInstance = TUF({
     rate: 0,
     failThreshold: 10,
     successThreshold: 3,
-    breakerTimeout: 10000
+    breakerTimeout: 10000,
+    retryBreaker: false
 });
 ```
 
@@ -49,6 +50,7 @@ const axiosLocalhostTUFInstance = TUF({
   - **failThreshold** Circuit breaker failure count threshold.
   - **successThreshold** Circuit breaker success count threshold.
   - **breakerTimeout** Duration to leave circuit breaker off after it's triggered (in ms).
+  - **retryBreaker** Should we retry if we hit circuit breaker, or pass to fallback?
   
 After you create your TUF instance, you will need to pass it an error handler, fallback, and initial function. It will return a TUF instance wrapping your initial function.
 
@@ -74,7 +76,8 @@ const axiosLocalhostTUFInstance = TUF({
     rate: 0,
     failThreshold: 10,
     successThreshold: 3,
-    breakerTimeout: 10000
+    breakerTimeout: 10000,
+    retryBreaker: false
 });
 
 //Wrap your error handler, fallback, and function.
