@@ -1,6 +1,6 @@
 {
   "name": "tuf-resil",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Functional ES6 Resiliency: Circuit Breaker, Fallback, Retry, Backoff, Rate Limiting",
   "main": "tuf-resil.cjs",
   "module": "tuf-resil.mjs",

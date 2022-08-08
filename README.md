@@ -10,9 +10,11 @@ Simple, full-featured functional resiliency in 37 lines of code. :)
 ```
 import TUF from './tuf-resil.js';
 
-const axiosGetLocalhost = TUF()(async (err) => console.log(err),
-					null || async(url) => {data: 'data from fallback source'},
-					axios.get);
+const errorFunction = async (err) => console.log(err)
+
+const fallbackFunction = null || async(url) => {data: 'pretended to get data from fallback source'};
+
+const axiosGetLocalhost = TUF()( errorFunction , fallbackFunction , axios.get );
 
 const res = await axiosGetLocalhost('http://localhost:3000/');
 if(res) console.log(res);
@@ -56,11 +58,11 @@ const axiosLocalhostTUFInstance = TUF({
     retries: 3,
     initialBackoff: 1000,
     backoffFunction: (delay, initial, attempt) => delay+initial,
-    rate: 0,
-    circuitBreaker: true
-    failThreshold: 10,
-    successThreshold: 3,
+    rateLimit: 0,
+    circuitBreaker: true,
     breakerTimeout: 10000,
+    failThreshold: 10,
+    successThreshold: 3
 });
 ```
 
@@ -71,11 +73,11 @@ const axiosLocalhostTUFInstance = TUF({
   - **backoffFunction** Takes the current execution's delay (initially 0),
     the backoff value, and an attempt number as input.
     Returns a new delay. If not provided, will use default function. Set to **null** to disable backoff.
-  - **rate** Rate limiting for this resource in minumum ms delay between requests. 0 for none.
+  - **rateLimit** Rate limiting for this resource in minumum ms delay between requests. 0 for none.
   - **circuitBreaker** Enable or disable Circuit Breaker.
-  - **failThreshold** Circuit breaker failure count threshold.
-  - **successThreshold** Circuit breaker success count threshold.
   - **breakerTimeout** Duration to leave circuit breaker off after it's triggered (in ms).
+  - **failThreshold** Number of failures required to trigger circuit breaker.
+  - **successThreshold** Number of successes required after *breakerTimeout* to leave half-open state.
   
 After you create your TUF instance, you will need to pass it an error handler, fallback, and initial function. It will return a TUF instance wrapping your initial function.
 
