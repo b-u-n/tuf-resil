@@ -3,14 +3,10 @@ const app = express();
  
 const port = 30001;
  
-app.get("/", (req, res) => {
-   res.status(200).send("Success!");
-   /*
-  if (Math.random() > 0.5) {
-    res.status(200).send("Success!");
-  } else {
-    res.status(400).send("Failed!");
-  }*/
+app.get("/:pass/:id", (req, res) => {
+  req.params.pass === '1' ?
+   res.status(200).send("Success!") :
+   res.status(400).send("Failed!");
 });
  
 app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
