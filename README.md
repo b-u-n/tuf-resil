@@ -57,7 +57,7 @@ const axiosLocalhostTUFInstance = TUF({
   
 After you create your TUF instance, you will need to pass it an error handler, fallback, and initial function. It will return a TUF instance wrapping your initial function.
 
-`const myFunctionTUF = axiosLocalhostTUF(errorHandlerAsync, fallbackFunctionAsync, initialFunctionAsync);`
+`const myFunctionTUF = axiosLocalhostTUFInstance(errorHandlerAsync, fallbackFunctionAsync, initialFunctionAsync);`
 
 The error handler will receive the following object to assist in analyzing failure states:
 
