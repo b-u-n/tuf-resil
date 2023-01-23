@@ -8,7 +8,7 @@ Simple, full-featured ES6 module for functional resiliency in < 50 lines of code
 ## tl;dr
 
 ```
-import TUF from './tuf-resil.js';
+import TUF from 'tuf-resil';
 
 const errorFunction = async (err) => console.log(err)
 
@@ -23,7 +23,7 @@ if(res) console.log(res);
 ## Usage
 
 
-`import TUF from './tuf-resil.js';`
+`import TUF from 'tuf-resil';`
 
 First, define a TUF instance that we'll use to wrap a resource (for example, an axios connection to localhost).
 
