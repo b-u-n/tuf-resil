@@ -12,7 +12,7 @@ import TUF from 'tuf-resil';
 
 const errorFunction = async (err) => console.log(err)
 
-const fallbackFunction = null || async(url) => {data: 'pretended to get data from fallback source'};
+const fallbackFunction = null ?? (async(url) => ({data: 'pretended to get data from fallback source'}));
 
 const axiosGetLocalhost = TUF()( errorFunction , fallbackFunction , axios.get );
 
